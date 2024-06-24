@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Group Rankings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffea00; /* giallo acceso */
+            margin: 20px;
+        }
+
+        h1 {
+            color: #4caf50; /* verde acceso */
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff; /* bianco */
+            border: 1px solid #4caf50; /* verde acceso */
+        }
+
+        th, td {
+            border: 1px solid #4caf50; /* verde acceso */
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #8bc34a; /* verde brillante */
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f3f3f3; /* grigio chiaro */
+        }
+
+        tr:hover {
+            background-color: #e0f7fa; /* celeste */
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #4caf50; /* verde acceso */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #8bc34a; /* verde brillante */
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            const maxSum = 45;
+            const columns = ['singolo', 'coppia', 'piccola', 'grande', 'musici'];
+            const columnSums = {};
+            const columnValues = {};
+
+            // Initialize column sums and values
+            columns.forEach(column => {
+                columnSums[column] = 0;
+                columnValues[column] = [];
+            });
+
+            // Calculate sums for each column and check for duplicates
+            columns.forEach(column => {
+                for (let i = 0; i < {{ dataframe.shape[0] }}; i++) {
+                    const value = parseInt(document.querySelector(`[name="${column}_${i}"]`).value) || 0;
+                    columnSums[column] += value;
+                    if (value !== 0 && columnValues[column].includes(value)) {
+                        alert(`Il valore ${value} è duplicato nella colonna ${column}. Si prega di controllare. CasaNormannaEnterprise Team.`);
+                        return false; // Prevent form submission
+                    }
+                    if (value !== 0) {
+                        columnValues[column].push(value);
+                    }
+                }
+            });
+
+            // Check if any column sum exceeds the maximum allowed sum
+            for (let column in columnSums) {
+                if (columnSums[column] > maxSum) {
+                    alert(`La somma delle posizioni della specialità ${column} non può essere maggiore del numero massimo (${maxSum}). Si prega di controllare. CasaNormannaEnterprise Team.`);
+                    return false; // Prevent form submission
+                }
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
+</head>
+<body>
+    <img src="/Users/giuseppecangemi/Desktop/Programming/FISB/templates/logo.jpg" alt="a">
+    <h1>Classifica Gruppi - Tenzone Bronzea Sulmona</h1>
+    <form method="POST" action="/update" onsubmit="return validateForm();">
+        <table>
+            <tr>
+                <th>Posizione</th>
+                <th>Gruppo</th>
+                <th>Singolo</th>
+                <th>Coppia</th>
+                <th>Piccola</th>
+                <th>Grande</th>
+                <th>Musici</th>
+                <th>Combinata</th>
+            </tr>
+            {% for idx, row in dataframe.iterrows() %}
+            <tr>
+                <td>{{ row.Posizione }}</td>
+                <td>{{ row.Gruppo }}</td>
+                <td><input type="number" name="singolo_{{ idx }}" value="{{ row.Singolo }}"></td>
+                <td><input type="number" name="coppia_{{ idx }}" value="{{ row.Coppia }}"></td>
+                <td><input type="number" name="piccola_{{ idx }}" value="{{ row.Piccola }}"></td>
+                <td><input type="number" name="grande_{{ idx }}" value="{{ row.Grande }}"></td>
+                <td><input type="number" name="musici_{{ idx }}" value="{{ row.Musici }}"></td>
+                <td>{{ row.Combinata }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button type="submit">Update Scores</button>
+    </form>
+</body>
+</html>
