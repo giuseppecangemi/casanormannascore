@@ -1,7 +1,11 @@
 import pandas as pd
+import os
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
+
+# Ottieni la porta dal valore di PORT nell'ambiente o usa 10000 di default se non definito
+port = int(os.environ.get('PORT', 10000))
 
 class CalcolaPosizione:
     def __init__(self, lista_gruppi=None, parametri=None, updates=None):
