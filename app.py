@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 from flask import Flask, render_template, request
 
@@ -25,7 +24,7 @@ class CalcolaPosizione:
 
     def popola_dataframe(self):
         for i, gruppo in enumerate(self.lista_gruppi):
-            self.df.loc[i] = [np.nan] * len(self.df.columns)
+            self.df.loc[i] = [float('nan')] * len(self.df.columns)
             self.df.at[i, 'Gruppo'] = gruppo
             self.df.at[i, 'Singolo'] = 0
             self.df.at[i, 'Coppia'] = 0
