@@ -76,4 +76,5 @@ def update():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Avvia l'applicazione Flask
+    app.run(host='0.0.0.0', port=port, debug=True)
