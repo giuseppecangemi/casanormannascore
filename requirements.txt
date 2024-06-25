@@ -7,7 +7,4 @@ pytz==2024.1
 six==1.16.0
 tzdata==2024.1
 bleach
-tinycss2 (>=1.1.0, <1.2) ; extra == 'css'
-
-
-
+tinycss2>=1.1.0,<1.2
