@@ -10,10 +10,8 @@ port = int(os.environ.get('PORT', 10000))
 class CalcolaPosizione:
     def __init__(self, lista_gruppi=None, parametri=None, updates=None):
         self.lista_gruppi = lista_gruppi if lista_gruppi is not None else [
-            "Contrada della Corte", "Artena", "Torri Metelliane", "Pozzo Seravezza", "Piazzarola", "Borgo Veneto",
-            "Borgo Don Bosco", "Tempesta Noale", "Arquatesi", "Terre Sabaude", "Rione Cento", "Borgo San Pietro",
-            "Porta Tufilla", "Rione Santa Caterina", "ASTA", "Citta Regia", "Rocca di Monselice",
-            "Torre Dei Germani", "Contesa Estense", "Rione San Paolo"
+            "Associazione Culturale Sestiere Porta Bonomini di Sulmona", "Associazione Giovani Maestri", "Borgo San Nicolò", "Casa Normanna - Rione Vecchia Matrice", "Gruppo Sbandieratori e Musici del Niballo di Faenza",
+            "Musici e Sbandieratori Castelfranco di Sotto", "Rione Cento", "Rione Madonna delle Stuoie", "Rione San Paolo"
         ]
 
         self.parametri = parametri if parametri is not None else {
